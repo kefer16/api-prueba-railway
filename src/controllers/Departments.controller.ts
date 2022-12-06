@@ -5,7 +5,6 @@ import { handleHttp } from "../utils/error.handler";
 const getDepartment = async (req: Request, res: Response) => {
 	try {
 		console.log(req);
-		
 		res.send(req.body);
 	} catch (error) {
 		handleHttp(res, "ERROR_GET_DEPARTAMENT");
