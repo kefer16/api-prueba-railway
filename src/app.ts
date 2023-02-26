@@ -1,5 +1,6 @@
 import "dotenv/config";
 // import express from "express";
+// import jwt from "jsonwebtoken";
 // import cors from "cors";
 // import { routerApp } from "./routes/Departaments.router";
 import { Server } from "./models/server";

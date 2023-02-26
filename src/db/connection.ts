@@ -6,7 +6,7 @@ const { host, database, port, user, password } = new Credential();
 export const db = new Sequelize(database, user, password, {
 	host: host,
 	port: port,
-	dialect: "mysql",
+	dialect: "mssql",
 	define: {
 		timestamps: false,
 	},
