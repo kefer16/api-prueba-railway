@@ -1,29 +1,56 @@
 import { Request, Response } from "express";
-import { Usuario } from "../models/usuario";
+import { Usuario } from "../models/usuario.models";
+import { grabarEnvioAPI, grabarRespuestaAPI } from "./api_envio_controllers";
+import { grabarError } from "./error.controllers";
 
-export const getUsuarios = async (_req: Request, res: Response) => {
-	const usuarios = await Usuario.findAll();
-	res.json({
-		msg: "getUsuarios",
-		usuarios,
-	});
+export const getUsuarios = async (req: Request, res: Response) => {
+	let usuarios: any;
+	try {
+		await grabarEnvioAPI(req);
+
+		usuarios = await Usuario.findAll();
+
+		return res.json({
+			msg: "getUsuarios",
+			usuarios,
+			req: JSON.stringify(req.body),
+		});
+	} catch (e: any) {
+		await grabarError(e);
+
+		return res.status(500).json({
+			endPoint: "getUsuarios",
+			error: e.message,
+			msg: "Hable con el administrador",
+		});
+	} finally {
+		await grabarRespuestaAPI(res);
+	}
 };
 
-export const getUsuario: any = async (req: Request, res: Response) => {
-	const { id } = req.params;
-	const usuario = await Usuario.findByPk(id);
+export const getUsuario = async (req: Request, res: Response) => {
+	try {
+		const { id } = req.params;
+		const usuario = await Usuario.findByPk(id);
 
-	if (!usuario) {
-		return res.status(404).json({
-			msg: `No existe un usuario con el id: ${id}`,
+		if (!usuario) {
+			return res.status(404).json({
+				msg: `No existe un usuario con el id: ${id}`,
+			});
+		}
+
+		return res.json({
+			msg: "getUsuario",
+			id,
+			usuario,
+		});
+	} catch (error) {
+		await grabarError(error);
+		return res.status(500).json({
+			endPoint: "getUsuario",
+			msg: "Hable con el administrador",
 		});
 	}
-
-	return res.json({
-		msg: "getUsuario",
-		id,
-		usuario,
-	});
 };
 
 export const postUsuario = async (req: Request, res: Response) => {
@@ -32,12 +59,12 @@ export const postUsuario = async (req: Request, res: Response) => {
 	try {
 		const existeUsuario = await Usuario.findOne({
 			where: {
-				mod_numero_series: body.mod_numero_series,
+				id: body.id,
 			},
 		});
 		if (existeUsuario) {
 			return res.json({
-				msg: `ya existe el numero de serie ${body.mod_numero_series}`,
+				msg: `ya existe este usuario con codigo:[${body.mod_numero_series}]`,
 			});
 		}
 
@@ -45,8 +72,6 @@ export const postUsuario = async (req: Request, res: Response) => {
 		await usuario.save(body);
 		return res.json({ usuario });
 	} catch (error) {
-		console.log(error);
-
 		return res.status(500).json({
 			endPoint: "postUsuario",
 			msg: "Hable con el administrador",

@@ -4,39 +4,44 @@ import { db } from "../db/connection";
 export const Usuario = db.define(
 	"usuario",
 	{
-		id_usuario: {
-			type: DataTypes.INTEGER,
+		id: {
+			type: "UNIQUEIDENTIFIER",
+			defaultValue: DataTypes.UUIDV4,
 			primaryKey: true,
+			allowNull: false,
 		},
-		usu_nombre: {
+		nombre: {
 			type: DataTypes.STRING,
 		},
-		usu_apellido: {
+		apellido: {
 			type: DataTypes.STRING,
 		},
-		usu_correo: {
+		correo: {
 			type: DataTypes.STRING,
 		},
-		usu_usuario: {
+		usuario: {
 			type: DataTypes.STRING,
 		},
-		usu_contrasenia: {
+		contrasenia: {
 			type: DataTypes.STRING,
 		},
-		usu_dinero: {
+		dinero: {
 			type: DataTypes.DOUBLE,
 		},
-		usu_foto: {
-			type: DataTypes.STRING,
+		fecha_registro: {
+			type: DataTypes.DATE,
 		},
-		usu_fecha_registro: {
-			type: DataTypes.STRING,
-		},
-		usu_activo: {
+		activo: {
 			type: DataTypes.BOOLEAN,
 		},
-		privilegio_id_privilegio: {
-			type: DataTypes.INTEGER,
+		fk_privilegio: {
+			type: DataTypes.STRING,
+		},
+		fecha_inicial: {
+			type: DataTypes.DATE,
+		},
+		fecha_final: {
+			type: DataTypes.DATE,
 		},
 	},
 	{ freezeTableName: true }

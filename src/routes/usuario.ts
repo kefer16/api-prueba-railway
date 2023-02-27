@@ -5,7 +5,7 @@ import {
 	getUsuarios,
 	postUsuario,
 	putUsuario,
-} from "../controllers/usuario";
+} from "../controllers/usuario.controllers";
 
 const router = Router();
 

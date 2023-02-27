@@ -1,5 +1,5 @@
 import express, { Application } from "express";
-import userRoutes from "../routes/usuario";
+import usuarioRutas from "../routes/usuario";
 import cors from "cors";
 import { db } from "../db/connection";
 
@@ -7,7 +7,7 @@ export class Server {
 	private app: Application;
 	private port: string;
 	private apiPaths = {
-		usuarios: "/api/usuarios",
+		usuario: "/api/usuario",
 	};
 	constructor() {
 		this.app = express();
@@ -32,7 +32,7 @@ export class Server {
 		this.app.use(express.json());
 	}
 	routes() {
-		this.app.use(this.apiPaths.usuarios, userRoutes);
+		this.app.use(this.apiPaths.usuario, usuarioRutas);
 	}
 
 	listen() {
