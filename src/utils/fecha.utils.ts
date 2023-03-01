@@ -1,5 +1,5 @@
-export const convertirFechaLocal = (date: Date) => {
-	var local = new Date(date);
-	local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+export const convertirFechaLocal = () => {
+	var local = new Date();
+	local.setMinutes(local.getMinutes() - local.getTimezoneOffset());
 	return local.toJSON();
 };

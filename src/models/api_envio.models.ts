@@ -26,10 +26,6 @@ export const ApiEnvio = db.define(
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
-		autorization_type: {
-			type: DataTypes.STRING,
-			allowNull: false,
-		},
 		key: {
 			type: DataTypes.STRING,
 			allowNull: false,
@@ -60,6 +56,10 @@ export const ApiEnvio = db.define(
 		},
 		fk_usuario: {
 			type: "UNIQUEIDENTIFIER",
+			allowNull: false,
+		},
+		status_code: {
+			type: DataTypes.STRING,
 			allowNull: false,
 		},
 	},

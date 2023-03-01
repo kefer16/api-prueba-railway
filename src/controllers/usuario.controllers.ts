@@ -1,55 +1,73 @@
 import { Request, Response } from "express";
 import { Usuario } from "../models/usuario.models";
 import { grabarEnvioAPI, grabarRespuestaAPI } from "./api_envio_controllers";
+import { v4 as uuidv4 } from "uuid";
 import { grabarError } from "./error.controllers";
 
 export const getUsuarios = async (req: Request, res: Response) => {
-	let usuarios: any;
+	const code_send = uuidv4();
+	let datos: object = {};
+
 	try {
-		await grabarEnvioAPI(req);
+		await grabarEnvioAPI(code_send, req);
 
-		usuarios = await Usuario.findAll();
+		const usuarios = await Usuario.findAll();
 
-		return res.json({
+		datos = {
 			msg: "getUsuarios",
 			usuarios,
-			req: JSON.stringify(req.body),
-		});
+		};
+		return res.json(datos);
 	} catch (e: any) {
 		await grabarError(e);
 
-		return res.status(500).json({
+		datos = {
 			endPoint: "getUsuarios",
 			error: e.message,
 			msg: "Hable con el administrador",
-		});
+		};
+		return res.status(500).json(datos);
 	} finally {
-		await grabarRespuestaAPI(res);
+		await grabarRespuestaAPI(code_send, datos, res);
 	}
 };
 
 export const getUsuario = async (req: Request, res: Response) => {
+	const code_send = uuidv4();
+	let datos: object = {};
+
 	try {
+		await grabarEnvioAPI(code_send, req);
+
 		const { id } = req.params;
+
 		const usuario = await Usuario.findByPk(id);
 
 		if (!usuario) {
-			return res.status(404).json({
+			datos = {
 				msg: `No existe un usuario con el id: ${id}`,
-			});
+			};
+			return res.status(404).json(datos);
 		}
-
-		return res.json({
+		datos = {
 			msg: "getUsuario",
 			id,
 			usuario,
-		});
-	} catch (error) {
-		await grabarError(error);
-		return res.status(500).json({
+		};
+		return res.status(200).json(datos);
+	} catch (e: any) {
+		console.log(typeof e);
+
+		await grabarError(e);
+
+		datos = {
 			endPoint: "getUsuario",
+			error: e.message,
 			msg: "Hable con el administrador",
-		});
+		};
+		return res.status(500).json(datos);
+	} finally {
+		await grabarRespuestaAPI(code_send, datos, res);
 	}
 };
 
