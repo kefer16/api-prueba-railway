@@ -11,7 +11,7 @@ export class Server {
 	};
 	constructor() {
 		this.app = express();
-		this.port = process.env.API_PORT || "3000";
+		this.port = process.env.API_PORT || "8090";
 		this.dbConnection();
 		this.middlewares();
 		//definir mis rutas
