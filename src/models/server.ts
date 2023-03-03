@@ -22,7 +22,7 @@ export class Server {
 			await db.authenticate();
 			console.log("database online");
 		} catch (error: any) {
-			throw new Error(error.sqlMessage);
+			throw new Error(error);
 		}
 	}
 	middlewares() {
