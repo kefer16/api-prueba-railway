@@ -4,6 +4,16 @@ import { grabarEnvioAPI, grabarRespuestaAPI } from "./api_envio_controllers";
 import { v4 as uuidv4 } from "uuid";
 import { grabarError } from "./error.controllers";
 
+export const getPrueba = async (_req: Request, res: Response) => {
+	let datos: object = {};
+
+	datos = {
+		msg: "getPrueba",
+		mensaje: "funcionando",
+	};
+	return res.status(200).json(datos);
+};
+
 export const getUsuarios = async (req: Request, res: Response) => {
 	const code_send = uuidv4();
 	let datos: object = {};
