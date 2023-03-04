@@ -3,7 +3,7 @@ import "dotenv/config";
 // import jwt from "jsonwebtoken";
 // import cors from "cors";
 // import { routerApp } from "./routes/Departaments.router";
-import { Server } from "./models/server";
+import { Server } from "./src/models/server";
 
 // const PORT = process.env.API_SV_PORT;
 // const app = express();
